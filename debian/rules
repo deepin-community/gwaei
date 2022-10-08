@@ -1,0 +1,117 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# not needed, but for convenience when I work by hand:
+#export QUILT_PATCHES=debian/patches
+
+PACKAGE=gwaei
+
+CFLAGS = -Wall -g
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+endif
+
+clean:
+	dh_testdir
+	dh_testroot
+	make clean || true
+	#for i in 16x16 24x24 32x32 ; do \
+	#  rm -f src/images/$$i/gwaei.xpm ; \
+	#done
+	rm -f config.status Doxyfile config.h stamp-h1 config.log
+	rm -f Makefile help/gwaei.omf help/Makefile po/Makefile libtool
+	rm -f po/POTFILES po/Makefile.in rpm/rpm_gconf_install_post.sh
+	rm -f po/stamp-it
+	rm -f rpm/fedora/SPECS/gwaei.spec rpm/gwaei.spec
+	rm -f src/gwaei/doxyfile
+	rm -f src/gwaei/Makefile
+	rm -f src/gwaei/help/Makefile src/gwaei/help/gwaei.omf
+	rm -f src/gwaei/ui/Makefile
+	rm -f src/gwaei/include/gwaei/Makefile
+	rm -f src/libwaei/doxyfile
+	rm -f src/libwaei/Makefile src/libwaei/include/libwaei/Makefile
+	rm -f src/waei/doxyfile src/waei/Makefile
+	rm -f src/waei/include/waei/Makefile
+	rm -f src/images/Makefile
+	rm -f src/Makefile src/xml/Makefile src/kpengine/Makefile
+	rm -f mandir/Makefile
+	rm -rf src/kpengine/.deps src/.deps
+	rm -f src/desktop/Makefile src/schemas/Makefile
+	rm -f src/img/Makefile
+	rm -f deb/DEBIAN/control deb/DEBIAN/postinst deb/DEBIAN/prerm
+	rm -f build-stamp configure-stamp
+	dh_autoreconf_clean
+	dh_clean
+
+config: config-stamp
+config-stamp: configure
+	dh_testdir
+	dh_autoreconf
+	CFLAGS="$(CFLAGS)" dh_auto_configure --	\
+		--sysconfdir=/usr/share	\
+		--libdir='$${prefix}/lib' \
+		--disable-scrollkeeper
+	# convert png icons to xpm so that we can use them with menu system
+	#for i in 16x16 24x24 32x32 ; do \
+	#  convert src/images/$$i/gwaei.png src/images/$$i/gwaei.xpm ; \
+	#done
+	touch config-stamp
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+
+build-stamp: config
+	dh_testdir
+	$(MAKE)
+	touch build-stamp
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install --sourcedir=debian/tmp
+	dh_makeshlibs
+	# GPL is shipped globally, and mentioned in the copyright file
+	rm -f $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/gwaei/COPYING
+	# this will be already installed by dh_installchangelogs below
+	rm -f $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/gwaei/ChangeLog
+	#
+	# install additional xpm icons
+	#dh_installdirs usr/share/pixmaps
+	#cp src/images/16x16/gwaei.xpm \
+	#	$(CURDIR)/debian/$(PACKAGE)/usr/share/pixmaps/gwaei_16x16.xpm
+	#cp src/images/32x32/gwaei.xpm \
+	#	$(CURDIR)/debian/$(PACKAGE)/usr/share/pixmaps/gwaei_32x32.xpm
+	#cp src/images/24x24/gwaei.xpm \
+	#	$(CURDIR)/debian/$(PACKAGE)/usr/share/pixmaps/gwaei.xpm
+
+# Build architecture-independent files here.
+binary-indep: build install
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_makeshlibs
+	dh_installchangelogs
+	dh_installdocs NEWS README THANKS
+	#dh_installmenu
+	# should be done by the installation above
+	#dh_installman mandir/gwaei.1 mandir/waei.1
+	dh_makeshlibs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: config build clean binary-indep binary-arch binary install

@@ -1,0 +1,172 @@
+gwaei (3.6.2-9) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Trim trailing whitespace.
+  * Bump debhelper from old 9 to 10.
+  * Use canonical URL in Vcs-Git.
+
+  [ Norbert Preining ]
+  * switch to yelp (Closes: #947532)
+
+ -- Norbert Preining <norbert@preining.info>  Thu, 16 Apr 2020 06:28:36 +0900
+
+gwaei (3.6.2-8) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Norbert Preining <norbert@preining.info>  Wed, 10 Jul 2019 18:26:43 +0900
+
+gwaei (3.6.2-7) experimental; urgency=medium
+
+  * Fix FTCBFS: Let dh_auto_configure pass --host to ./configure.
+    Patch by Helmut Grohne, thanks. (Closes: #928848)
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 13 May 2019 10:06:00 +0900
+
+gwaei (3.6.2-6) unstable; urgency=medium
+
+  * update VCS and email
+
+ -- Norbert Preining <norbert@preining.info>  Sun, 03 Mar 2019 09:26:40 +0900
+
+gwaei (3.6.2-5) unstable; urgency=medium
+
+  * add VCS fields
+  * disable scrollkeeper, fix ftbfs (Closes: #885654)
+
+ -- Norbert Preining <preining@debian.org>  Mon, 01 Oct 2018 08:00:36 +0900
+
+gwaei (3.6.2-4) unstable; urgency=medium
+
+  * drop rarian-compat from build deps (Closes: #885654)
+  * don't use dh_gconf (Closes: #908881)
+  * bump standards version, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Sun, 30 Sep 2018 22:27:25 +0900
+
+gwaei (3.6.2-3) unstable; urgency=medium
+
+  * fix missing dependency on libwaei (Closes: #715124)
+  * use debhelper compat version 9
+  * bump standards version:
+    - stop shipping menu files, deprecated
+
+ -- Norbert Preining <preining@debian.org>  Sat, 05 Nov 2016 16:52:17 +0900
+
+gwaei (3.6.2-2) unstable; urgency=medium
+
+  * import changes from Ubuntu to use reautoconf (Closes: #734562)
+  * bump standards version, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Wed, 08 Jan 2014 20:02:32 +0900
+
+gwaei (3.6.2-1) unstable; urgency=low
+
+  * Imported Upstream version 3.6.2
+  * drop debian/patches/fix-google-translate-url, fixed in a different way
+
+ -- Norbert Preining <preining@debian.org>  Sat, 05 Jan 2013 12:46:08 +0900
+
+gwaei (3.6.1-1) experimental; urgency=low
+
+  * new upstream release: fixing bugs with Ubuntu (LP: #971240)
+
+ -- Norbert Preining <preining@debian.org>  Mon, 24 Sep 2012 08:13:57 +0900
+
+gwaei (3.6.0-1) experimental; urgency=low
+
+  * unfuzzify patch(es)
+  * new patch fix-google-translate-url to fix google search
+  * new disabled patch ubuntu_unity_fix to fix Ubuntu's unity display problems
+    (patch by Yvon TANGUY). This patch can be enabled in Ubuntu builds to
+    get it working with Unity, but it breaks on Debian, so it is not
+    activated by default. It might be unnecessary with new upstream
+  * fixes for the rules file
+  * new recommends: mecab-ipadic, hunspell-en-us
+
+ -- Norbert Preining <preining@debian.org>  Wed, 19 Sep 2012 15:14:25 +0900
+
+gwaei (3.4.3-1) unstable; urgency=low
+
+  * new upstream release(s)
+    . switch to hunspell, no need for enchant (Closes: #649576)
+    . switch to gtk >= 3.3 (Closes: #641814)
+    . disable old patches
+  * adjust build dependencies
+
+ -- Norbert Preining <preining@debian.org>  Thu, 26 Apr 2012 13:36:43 +0900
+
+gwaei (3.2.0b1-2) unstable; urgency=low
+
+  * fix for stupid libgtk library breaking unrelated software, needed
+    otherwise gwaei will never start (see eog bug #665374 for reference)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 04 Apr 2012 11:36:28 +0900
+
+gwaei (3.2.0b1-1) unstable; urgency=low
+
+  * new upstream beta releases
+  * libwaei1 renamed to libwaei2 due to so version change
+  * remove libunique from build-deps, not needed anymore
+  * added build-deps: gsettings-desktop-schemas and enchant (needed
+    for configure testing, otherwise disabled)
+
+ -- Norbert Preining <preining@debian.org>  Sun, 20 Nov 2011 22:51:20 +0900
+
+gwaei (3.0.2-1) unstable; urgency=low
+
+  * new upstream release
+  * adapt build dependencies
+  * bump standards version, no changes necessary
+  * add some recommended build targets to make lintian happy
+  * split shared library into a separate package
+
+ -- Norbert Preining <preining@debian.org>  Tue, 19 Jul 2011 19:16:54 +0900
+
+gwaei (1.4.3-1) experimental; urgency=low
+
+  * new upstream release
+  * upload to experimental to keep unstable for squeeze fixes
+
+ -- Norbert Preining <preining@debian.org>  Mon, 15 Nov 2010 20:14:32 +0900
+
+gwaei (1.4.2-1) unstable; urgency=low
+
+  * new upstream release
+  * debian/control: bump standards version to 3.9.1, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Wed, 22 Sep 2010 23:59:48 +0900
+
+gwaei (1.4.1-2) unstable; urgency=low
+
+  * add menu file for gwaei (Closes: #589305)
+    - convert png icons to xpm, for that add imagemagick to build-deps
+    - add debian/menu file, putting it into Applications/Text category
+    - install the xpm files (16x16, 24x24, 32x32) into /u/s/pixmaps
+
+ -- Norbert Preining <preining@debian.org>  Tue, 20 Jul 2010 16:40:00 +0900
+
+gwaei (1.4.1-1) unstable; urgency=low
+
+  * new upstream release
+  * bump standards version to 3.9.0, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Thu, 08 Jul 2010 01:45:21 +0900
+
+gwaei (1.4.0-1) unstable; urgency=low
+
+  * new upstream releases:
+    - fixes the bug when removing dicts (Closes: #557565)
+    - includes copyright statements for included sub-programs, carried over
+      to debian/copyright (Closes: #557300)
+  * change package to source format 3.0 (quilt)
+  * bump standards version to 3.8.4, no changes necessary
+  * adapt build-dep for curses libraries
+
+ -- Norbert Preining <preining@debian.org>  Tue, 11 May 2010 18:08:02 +0900
+
+gwaei (1.2.1-1) unstable; urgency=low
+
+  * Initial packaging for Debian (Closes: #530398)
+
+ -- Norbert Preining <preining@debian.org>  Sun, 15 Nov 2009 15:21:20 +0900
